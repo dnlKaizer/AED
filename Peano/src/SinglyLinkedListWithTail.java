@@ -1,4 +1,4 @@
-public class Lista<T> {
+public class SinglyLinkedListWithTail<T> {
     
     private class Cell {
         T item;
@@ -31,7 +31,7 @@ public class Lista<T> {
 
     public void add(T item) {
         if (item == null) throw new IllegalArgumentException("Item nulo");
-        if (size == 0) add(item);
+        if (size == 0) insert(item);
         else {
             tail.next = new Cell(item);
             tail = tail.next;
@@ -75,7 +75,19 @@ public class Lista<T> {
 
     @Override
     public String toString() {
-        return super.toString();
+        Cell cell = head;
+        String str = "{ " + head.item;
+        int count = 0;
+        
+        while (count < size - 1) {
+            cell = cell.next;
+            str += ", " + cell.item;
+            count++;
+        }
+
+        str += " }";
+
+        return str;
     }
 
 }

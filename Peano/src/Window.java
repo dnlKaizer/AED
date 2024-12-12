@@ -12,12 +12,7 @@ import javax.swing.JTextField;
 public class Window extends JFrame implements ActionListener {
     
 	private JTextField tfNivel;
-	private JTextField tfTamanho;
-	private JTextField tfAngulo;
-
-	private Draw dc;
-	private JTextField tfX;
-	private JTextField tfY;
+	private CurveGraphics curveGraphics;
 
 	public Window() {
 		initGUI();
@@ -29,7 +24,7 @@ public class Window extends JFrame implements ActionListener {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("Curva");
 		// tamanho em pixels
-		setSize(700, 650);
+		setSize(700, 700);
 		// meio da tela
 		setLocationRelativeTo(null);
 		setBackground(Color.WHITE);
@@ -51,8 +46,8 @@ public class Window extends JFrame implements ActionListener {
 		panel.add(btDesenhar);
 
 		// colocar o canvas dentro do JFrame
-		dc = new Draw();
-		this.getContentPane().add(dc, BorderLayout.CENTER);
+		curveGraphics = new CurveGraphics();
+		this.getContentPane().add(curveGraphics, BorderLayout.CENTER);
 
 		// tornar a janela visivel
 		this.setVisible(true);
@@ -61,8 +56,9 @@ public class Window extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// Sera executado a cada clique do botao
+        int nivel = Integer.parseInt(tfNivel.getText());
+        Curve curve = new Curve(nivel);
 
-
-		dc.set();
+		curveGraphics.set(curve.createPoints());
 	}
 }

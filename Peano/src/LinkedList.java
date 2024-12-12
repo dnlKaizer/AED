@@ -1,4 +1,4 @@
-public class SinglyLinkedListWithTail<T> {
+public class LinkedList<T> {
     
     private class Cell {
         T item;
@@ -66,7 +66,7 @@ public class SinglyLinkedListWithTail<T> {
         if (index < 0 || index > size) throw new ArrayIndexOutOfBoundsException(index);
         int count = 0;
         Cell cell = head;
-        while (count < index) {
+        while (count < index - 1) {
             cell = cell.next;
             count++;
         }

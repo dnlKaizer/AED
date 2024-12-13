@@ -20,18 +20,16 @@ public class CurveGraphics extends Canvas {
 	public void paint(Graphics g) {
 		super.paint(g);
 		setBackground(Color.WHITE);
-
-		createCurve((Graphics2D) g, 0);
+		createCurve((Graphics2D) g);
 	} // paint
 
-	private void createCurve(Graphics2D g, int index) {
-		if (index >= list.size()) return;
-
-		Point pi = list.get(index);
-		index++;
-		Point pf = list.get(index);
-		g.drawLine(pi.getX(), pi.getY(), pf.getX(), pf.getY());
-		createCurve(g, index);
+	private void createCurve(Graphics2D g) {
+		for (int i = 0; i < list.size() - 1;) {
+			Point pi = list.get(i);
+			i++;
+			Point pf = list.get(i);
+			g.drawLine(pi.getX(), pi.getY(), pf.getX(), pf.getY());
+		}
 	}
 
 }

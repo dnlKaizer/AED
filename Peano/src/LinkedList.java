@@ -63,10 +63,10 @@ public class LinkedList<T> {
     }
 
     public T get(int index) {
-        if (index < 0 || index > size) throw new ArrayIndexOutOfBoundsException(index);
+        if (index < 0 || index >= size) throw new ArrayIndexOutOfBoundsException(index);
         int count = 0;
         Cell cell = head;
-        while (count < index - 1) {
+        while (count < index) {
             cell = cell.next;
             count++;
         }

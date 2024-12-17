@@ -10,17 +10,17 @@ public class Curve {
     public LinkedList<Point> createPoints() {
         // Criar lógica da curva de Peano aqui 
         list = new LinkedList<>();
-
-        list.add(new Point(50, 350));
-        list.add(new Point(650, 350));
-
-        exec(this.nivel);
-
+        int nivel = this.nivel;
+        if (nivel >= 1) {
+            list.add(new Point(50, 350));
+            list.add(new Point(650, 350));
+            exec(nivel - 1);
+        }
         return list;
     }
 
     private void exec(int nivel) {
-        if (nivel <= 1) return;
+        if (nivel < 1) return;
         int size = list.size();
         for (int i = 0, m = 0; m < size - 1; i += 9, m++) {
             generate(list.get(i), list.get(i + 1), i+1);
@@ -39,18 +39,18 @@ public class Curve {
         else 
             thetaY = (pi.getY() - pf.getY()) / Math.abs(pi.getY() - pf.getY());
 
-        Angle one = new Angle(90 - thetaX * 90 - 90 * Math.abs(thetaY) - 90 * thetaY);
-        Angle two = new Angle(90 + thetaY * 90 - 90 * Math.abs(thetaX) - 90 * thetaX);
+        int one = 90 - thetaX * 90 - 90 * Math.abs(thetaY) - 90 * thetaY;
+        int two = 90 + thetaY * 90 - 90 * Math.abs(thetaX) - 90 * thetaX;
 
         int[] theta = {
-            one.get(),
-            two.get(),
-            one.get(),
-            two.inverse(),
-            one.inverse(),
-            two.inverse(),
-            one.get(),
-            two.get()
+            one,
+            two,
+            one,
+            inverse(two),
+            inverse(one),
+            inverse(two),
+            one,
+            two
         }; 
 
         Point aux = pi;
@@ -60,5 +60,10 @@ public class Curve {
             indexPi++;
         }
     }
+
+    private int inverse(int angle) {
+        if (angle > 0) return angle - 180;
+        else return angle + 180;
+    } 
     
 }

@@ -24,7 +24,7 @@ public class Window extends JFrame implements ActionListener {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("Curva");
 		// tamanho em pixels
-		setSize(700, 700);
+		setSize(700, 800);
 		// meio da tela
 		setLocationRelativeTo(null);
 		setBackground(Color.WHITE);

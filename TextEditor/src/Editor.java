@@ -16,23 +16,17 @@ public class Editor {
         String text = "";
         int index = 0;
         GetText:
-        while (true) {
+        do {
             Loop:
-            for (; ; index++) {
-                if (index >= textFile.length()) {
-                    text += System.lineSeparator() + stackToString();
-                    break GetText;
-                }
-                char character = textFile.charAt(index);
+            while (index < textFile.length()) {
+                char character = textFile.charAt(index++);
 
                 if (character == BREAK_LINE) {
-                    index++;
                     break Loop;
                 }
 
                 if (character == CANCEL_LINE) {
-                    stack = new Stack<>(70);
-                    index++;
+                    stack.clear();
                     continue GetText;
                 }
 
@@ -50,10 +44,13 @@ public class Editor {
     
                 try {
                     stack.push(character);
-                } catch(Exception e) {}
+                } catch(Exception e) {
+                    index--;
+                    break Loop;
+                }
             }
             text += stackToString() + System.lineSeparator();
-        }
+        } while (index < textFile.length());
         return text;
     }
 

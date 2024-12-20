@@ -28,15 +28,24 @@ public class Stack<T> {
         return top;
     }
 
+    public void clear() {
+        while (!isEmpty()) {
+            try {
+                pop();
+            } catch (Exception e) {}
+        }
+    }
+
     @Override
     public String toString() {
-        if (array.length == 0) return "";
-        String str = "[ " + array[0];
+        if (isEmpty()) return "";
+        StringBuilder sb = new StringBuilder("[ ");
+        sb.append(array[0]);
         for (int i = 1; i < top; i++) {
-            str += ", " + array[i];
+            sb.append(", " + array[i]);
         }
-        str += " ]";
-        return str;
+        sb.append(" ]");
+        return sb.toString();
     }
 
 }

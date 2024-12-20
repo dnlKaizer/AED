@@ -13,6 +13,7 @@ public class Conversor {
         String text = "";
         try (BufferedReader br = new BufferedReader(new FileReader(url))) {
             text = br.readLine();
+            if (text == null) text = "";
         } catch (IOException e) {
             e.printStackTrace();
         }

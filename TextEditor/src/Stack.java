@@ -15,10 +15,9 @@ public class Stack<T> {
         else array[top++] = item;
     }
 
-    public T pop(int index) throws Exception {
-        if (index < 0 || index >= top) throw new ArrayIndexOutOfBoundsException(index);
-        else if (isEmpty()) throw new Exception("Erro: a pilha está vazia");
-        else return array[--top];
+    public T pop() throws Exception {
+        if (isEmpty()) throw new Exception("Erro: a pilha está vazia");
+        return array[--top];
     }
     
     public boolean isEmpty() {
@@ -27,6 +26,17 @@ public class Stack<T> {
 
     public int size() {
         return top;
+    }
+
+    @Override
+    public String toString() {
+        if (array.length == 0) return "";
+        String str = "[ " + array[0];
+        for (int i = 1; i < top; i++) {
+            str += ", " + array[i];
+        }
+        str += " ]";
+        return str;
     }
 
 }

@@ -45,8 +45,9 @@ public class Editor {
                 try {
                     stack.push(character);
                 } catch(Exception e) {
-                    index--;
-                    break Loop;
+                    // Código que impede perda de dados -> Força quebra de linha quando estoura
+                    // index--;
+                    // break Loop;
                 }
             }
             text += stackToString() + System.lineSeparator();

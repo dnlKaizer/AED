@@ -10,16 +10,15 @@ public class Agencia {
     private final int TEMPO_SIMULACAO = 360;
     private final int QUANTIDADE_MIN_CAIXAS = 1;
     private final int QUANTIDADE_MAX_CAIXAS = 5;
-    private final int QUANTIDADE_MIN_ATENDENTE = 2 * QUANTIDADE_MIN_CAIXAS;
-    private final int QUANTIDADE_MAX_ATENDENTE = 2 * QUANTIDADE_MAX_CAIXAS;
-    private final int NUMERO_MAX_CLIENTES = QUANTIDADE_MAX_CAIXAS;
+    private final int NUMERO_MAX_CLIENTES = 3;
 
     private final FilaCliente filaComum;
     private final FilaCliente filaPreferencial;
     private final FilaAtendente filaDescanso;
     private final ArrayList<Caixa> caixas;
 
-    private int preferenciasSeguidas;    
+    private int preferenciasSeguidas;   
+    private double coeficienteClientes; 
 
     private final Random random = new Random();
 
@@ -29,11 +28,13 @@ public class Agencia {
         this.filaDescanso = new FilaAtendente();
         this.caixas = new ArrayList<>();
         this.preferenciasSeguidas = 0;
+        this.coeficienteClientes = 0;
         this.init();
     }
 
     public void init() {
         int numCaixas = random.nextInt(QUANTIDADE_MIN_CAIXAS, QUANTIDADE_MAX_CAIXAS + 1);
+        this.coeficienteClientes = ((double)numCaixas / 6) / NUMERO_MAX_CLIENTES;
         for (int i = 0; i < numCaixas; i++) {
             caixas.add(new Caixa());
         }
@@ -47,27 +48,45 @@ public class Agencia {
     }
 
     public void execute() {
+        // Executa durante o tempo determinado
         for (int tempo = 0; tempo < TEMPO_SIMULACAO; tempo++) {
             sortearClientes();
-            atualizarCaixas();
+            atualizarTudo();
         }
+        // Executa enquanto tiver algum cliente na fila
         while (!filaComum.isEmpty() || !filaPreferencial.isEmpty()) {
-            atualizarCaixas();
+            atualizarTudo();
         }
+        // Executa enquanto tiver algum cliente em qualquer caixa
         for (Caixa caixa : caixas) {
             while (caixa.temCliente()) {
                 atualizarCaixas();
             }
         }
+        // Coloca todos os atendentes na fila de descanso
+        for (Caixa caixa : caixas) {
+            if (caixa.temAtendente()) {
+                Atendente atendente = caixa.getAtendente();
+                atendente.irDescansar();
+                filaDescanso.enqueue(atendente);
+            }
+        }
     }
 
     public void sortearClientes() {
-        int numClientes = random.nextDouble() < 0.2 ? random.nextInt(NUMERO_MAX_CLIENTES) : 0;
+        int numClientes = random.nextDouble() < coeficienteClientes ? random.nextInt(1, NUMERO_MAX_CLIENTES + 1) : 0;
         for (int i = 0; i < numClientes; i++) {
             Cliente cliente = new Cliente();
             if (cliente.isPreferencial()) filaPreferencial.enqueue(cliente);
             else filaComum.enqueue(cliente); 
         }
+    }
+
+    public void atualizarTudo() {
+        atualizarCaixas();
+        filaComum.incrementarTempoEspera();
+        filaPreferencial.incrementarTempoEspera();
+        filaDescanso.incrementarTempoDescanso();
     }
 
     public void atualizarCaixas() {

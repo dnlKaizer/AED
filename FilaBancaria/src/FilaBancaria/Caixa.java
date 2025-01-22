@@ -38,8 +38,9 @@ public class Caixa {
 
     public void atender() {
         if (temAtendente()) {
-            atendente.atender();
+            atendente.incrementarTempoAtendimento();
             if (temCliente()) {
+                atendente.incrementarCargaHoraria();
                 cliente.incrementarTempoAtendimento();
                 cargaHorariaAtendimentos++;
                 if (cliente.finalizouAtendimento()) {
@@ -67,13 +68,10 @@ public class Caixa {
 
     @Override
     public String toString() {
-        String n = System.lineSeparator();
-        StringBuilder sb = new StringBuilder("{").append(n);
-        sb.append("Atendente: ").append(atendente).append(n);
-        sb.append("Cliente: ").append(cliente).append(n);
-        sb.append("Carga Horária: ").append(cargaHorariaAtendimentos).append(n);
-        sb.append("Quantidade: ").append(qtdAtendimentos).append(n);
-        sb.append("}");
+        StringBuilder sb = new StringBuilder("[ ");
+        sb.append("Quantidade: ").append(qtdAtendimentos).append(" , ");
+        sb.append("Carga Horária: ").append(cargaHorariaAtendimentos);
+        sb.append(" ]");
         return sb.toString();
     }
 

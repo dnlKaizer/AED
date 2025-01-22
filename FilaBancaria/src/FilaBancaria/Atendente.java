@@ -25,8 +25,11 @@ public class Atendente {
         return cargaHorariaAtendimentos;
     }
 
-    public void atender() {
+    public void incrementarTempoAtendimento() {
         tempoAtendimento++;
+    }
+
+    public void incrementarCargaHoraria() {
         cargaHorariaAtendimentos++;
     }
 
@@ -58,9 +61,7 @@ public class Atendente {
     public String toString() {
         StringBuilder sb = new StringBuilder("[ ");
         sb.append("Qtd Atendimentos: ").append(qtdAtendimentos).append(" , ");
-        sb.append("Carga Horária: ").append(cargaHorariaAtendimentos).append(" , ");
-        sb.append("Tempo atendimento: ").append(tempoAtendimento).append(" , ");
-        sb.append("Tempo descanso: ").append(tempoDescanso);
+        sb.append("Carga Horária: ").append(cargaHorariaAtendimentos);
         sb.append(" ]");
         return sb.toString();
     }

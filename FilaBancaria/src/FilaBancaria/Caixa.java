@@ -22,6 +22,12 @@ public class Caixa {
         return cargaHorariaAtendimentos;
     }
 
+    public Atendente getAtendente() {
+        Atendente at = this.atendente;
+        this.atendente = null;
+        return at;
+    }
+
     public boolean temCliente() {
         return cliente != null;
     }
@@ -39,6 +45,7 @@ public class Caixa {
                 if (cliente.finalizouAtendimento()) {
                     cliente = null;
                     qtdAtendimentos++;
+                    atendente.incrementarQtdAtendimentos();
                 }
             }
         }

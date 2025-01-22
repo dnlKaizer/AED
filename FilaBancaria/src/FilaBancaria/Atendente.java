@@ -42,6 +42,10 @@ public class Atendente {
         tempoDescanso = 0;
     }
 
+    public void incrementarQtdAtendimentos() {
+        qtdAtendimentos++;
+    }
+
     public boolean acabouTurno() {
         return tempoAtendimento > TEMPO_MAX_TRABALHO;
     }

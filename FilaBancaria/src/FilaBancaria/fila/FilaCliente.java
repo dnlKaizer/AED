@@ -7,7 +7,6 @@ public class FilaCliente extends Fila<Cliente> {
         for (Cell cell = head.prox; cell != null; cell = cell.prox) {
             Cliente cliente = cell.item;
             cliente.incrementarTempoEsperaFila();
-            System.out.println(cliente);
         }
     }
 }

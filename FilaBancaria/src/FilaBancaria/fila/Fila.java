@@ -41,6 +41,7 @@ public class Fila<T> {
         if (size == 0) throw new NoSuchElementException("Lista vazia");
         T item = head.prox.item;
         head = head.prox;
+        head.item = null;
         size--;
         return item;
     }

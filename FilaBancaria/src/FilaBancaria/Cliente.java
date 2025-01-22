@@ -46,4 +46,17 @@ public class Cliente {
     public boolean finalizouAtendimento() {
         return tempoAtendimento >= tempoNecessarioAtendimento;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder("[ ");
+        sb.append("Preferencial: ").append(isPreferencial ? "Sim":"Não").append(" , ");
+        sb.append("Tempo espera: ").append(tempoEsperaFila).append(" , ");
+        sb.append("Tempo atendimento: ").append(tempoAtendimento).append(" , ");
+        sb.append("Tempo atendimento total: ").append(tempoNecessarioAtendimento);
+        sb.append(" ]");
+        return sb.toString();
+    }
+
+    
 }

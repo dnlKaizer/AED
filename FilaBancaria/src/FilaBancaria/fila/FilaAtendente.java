@@ -9,4 +9,8 @@ public class FilaAtendente extends Fila<Atendente> {
             System.out.println(atendente);
         }
     }
+
+    public boolean proximoAtendenteDescansou() {
+        return (head.prox != null && head.prox.item.estaDescansado());
+    }
 }

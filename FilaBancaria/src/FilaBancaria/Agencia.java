@@ -10,7 +10,7 @@ public class Agencia {
     private final int TEMPO_SIMULACAO = 360;
     private final int QUANTIDADE_MIN_CAIXAS = 1;
     private final int QUANTIDADE_MAX_CAIXAS = 5;
-    private final int QUANTIDADE_MIN_ATENDENTE = 2 * QUANTIDADE_MAX_CAIXAS;
+    private final int QUANTIDADE_MIN_ATENDENTE = 2 * QUANTIDADE_MIN_CAIXAS;
     private final int QUANTIDADE_MAX_ATENDENTE = 2 * QUANTIDADE_MAX_CAIXAS;
     private final int NUMERO_MAX_CLIENTES = QUANTIDADE_MAX_CAIXAS;
 
@@ -18,10 +18,9 @@ public class Agencia {
     private final FilaCliente filaPreferencial;
     private final FilaAtendente filaDescanso;
     private final ArrayList<Caixa> caixas;
-    private final int numCaixas;
-    private final int numAtendentes;
 
     private int tempo;
+    private int preferenciasSeguidas;    
 
     private final Random random = new Random();
 
@@ -31,17 +30,18 @@ public class Agencia {
         this.filaDescanso = new FilaAtendente();
         this.caixas = new ArrayList<>();
         this.tempo = 0;
-        this.numCaixas = random.nextInt(QUANTIDADE_MIN_CAIXAS, QUANTIDADE_MAX_CAIXAS + 1);
-        this.numAtendentes = random.nextInt(QUANTIDADE_MIN_ATENDENTE, QUANTIDADE_MAX_ATENDENTE + 1);
+        this.preferenciasSeguidas = 0;
         this.init();
     }
 
     public void init() {
-        for (int i = 0; i < numAtendentes; i++) {
-            filaDescanso.enqueue(new Atendente());
-        }
+        int numCaixas = random.nextInt(QUANTIDADE_MIN_CAIXAS, QUANTIDADE_MAX_CAIXAS + 1);
         for (int i = 0; i < numCaixas; i++) {
             caixas.add(new Caixa());
+        }
+        int numAtendentes = 2 * numCaixas;
+        for (int i = 0; i < numAtendentes; i++) {
+            filaDescanso.enqueue(new Atendente());
         }
         for (Caixa caixa : caixas) {
             caixa.addAtendente(filaDescanso.dequeue());
@@ -56,4 +56,39 @@ public class Agencia {
             else filaComum.enqueue(cliente); 
         }
     }
+
+    public void atualizarCaixas() {
+        for (Caixa caixa : caixas) {
+            if (caixa.acabouTurnoAtendente()) {
+                Atendente atendente = caixa.getAtendente();
+                atendente.irDescansar();
+                filaDescanso.enqueue(atendente);
+            }
+            if (!caixa.temAtendente()) {
+                if (filaDescanso.proximoAtendenteDescansou()) {
+                    Atendente atendente = filaDescanso.dequeue();
+                    atendente.irTrabalhar();
+                    caixa.addAtendente(atendente);
+                } else continue;
+            }
+            if (!caixa.temCliente()) {
+                FilaCliente fila = verificarPreferencia();
+                if (fila != null) caixa.addCliente(fila.dequeue());
+            }
+            caixa.atender();
+        }
+    }
+
+    public FilaCliente verificarPreferencia() {
+        if (!filaComum.isEmpty() && (filaPreferencial.isEmpty() || preferenciasSeguidas >= 2)) {
+            preferenciasSeguidas = 0;
+            return filaComum;
+        }
+        if (!filaPreferencial.isEmpty()) {
+            preferenciasSeguidas++;
+            return filaPreferencial;
+        }
+        return null;
+    }
+
 }

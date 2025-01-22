@@ -32,7 +32,7 @@ public class Cliente {
     }
 
     public void incrementarTempoAtendimento() {
-        this.tempoAtendimento--;
+        this.tempoAtendimento++;
     }
 
     public void incrementarTempoEsperaFila() {

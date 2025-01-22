@@ -47,11 +47,11 @@ public class Atendente {
     }
 
     public boolean acabouTurno() {
-        return tempoAtendimento > TEMPO_MAX_TRABALHO;
+        return tempoAtendimento >= TEMPO_MAX_TRABALHO;
     }
 
     public boolean estaDescansado() {
-        return tempoDescanso > TEMPO_DESCANSO; 
+        return tempoDescanso >= TEMPO_DESCANSO; 
     }
 
     @Override

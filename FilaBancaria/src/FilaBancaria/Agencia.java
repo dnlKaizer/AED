@@ -19,7 +19,6 @@ public class Agencia {
     private final FilaAtendente filaDescanso;
     private final ArrayList<Caixa> caixas;
 
-    private int tempo;
     private int preferenciasSeguidas;    
 
     private final Random random = new Random();
@@ -29,7 +28,6 @@ public class Agencia {
         this.filaPreferencial = new FilaCliente();
         this.filaDescanso = new FilaAtendente();
         this.caixas = new ArrayList<>();
-        this.tempo = 0;
         this.preferenciasSeguidas = 0;
         this.init();
     }
@@ -48,8 +46,23 @@ public class Agencia {
         }
     }
 
+    public void execute() {
+        for (int tempo = 0; tempo < TEMPO_SIMULACAO; tempo++) {
+            sortearClientes();
+            atualizarCaixas();
+        }
+        while (!filaComum.isEmpty() || !filaPreferencial.isEmpty()) {
+            atualizarCaixas();
+        }
+        for (Caixa caixa : caixas) {
+            while (caixa.temCliente()) {
+                atualizarCaixas();
+            }
+        }
+    }
+
     public void sortearClientes() {
-        int numClientes = random.nextInt(NUMERO_MAX_CLIENTES);
+        int numClientes = random.nextDouble() < 0.2 ? random.nextInt(NUMERO_MAX_CLIENTES) : 0;
         for (int i = 0; i < numClientes; i++) {
             Cliente cliente = new Cliente();
             if (cliente.isPreferencial()) filaPreferencial.enqueue(cliente);
@@ -89,6 +102,15 @@ public class Agencia {
             return filaPreferencial;
         }
         return null;
+    }
+
+    public void relatorio() {
+        for (Caixa caixa : caixas) {
+            System.out.println(caixa);
+        }
+        while (!filaDescanso.isEmpty()) {
+            System.out.println(filaDescanso.dequeue());
+        }
     }
 
 }

@@ -1,21 +1,21 @@
+package FilaBancaria.fila;
 import java.util.NoSuchElementException;
 
 public class Fila<T> {
     
-    private class Cell {
+    protected class Cell {
         Cell prox;
         T item;
         
-        public Cell(T item) {
+        protected Cell(T item) {
             this.item = item;
             this.prox = null;
         }
     }
     
-    private Cell head;
-    private Cell tail;
-
-    private int size;
+    protected Cell head;
+    protected Cell tail;
+    protected int size;
 
     public Fila() {
         head = new Cell(null);

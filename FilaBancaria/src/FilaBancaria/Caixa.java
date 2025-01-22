@@ -22,6 +22,32 @@ public class Caixa {
         return cargaHorariaAtendimentos;
     }
 
+    public boolean temCliente() {
+        return cliente != null;
+    }
+
+    public boolean temAtendente() {
+        return atendente != null;
+    }
+
+    public void atender() {
+        if (temAtendente()) {
+            atendente.atender();
+            if (temCliente()) {
+                cliente.incrementarTempoAtendimento();
+                cargaHorariaAtendimentos++;
+                if (cliente.finalizouAtendimento()) {
+                    cliente = null;
+                    qtdAtendimentos++;
+                }
+            }
+        }
+    }
+
+    public boolean acabouTurnoAtendente() {
+        return atendente != null ? atendente.acabouTurno() : false;
+    }
+
     public void addCliente(Cliente cliente) {
         if (cliente == null) throw new IllegalArgumentException("Cliente nulo");
         this.cliente = cliente;

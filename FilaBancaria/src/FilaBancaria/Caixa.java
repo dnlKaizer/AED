@@ -58,4 +58,16 @@ public class Caixa {
         this.atendente = atendente;
     }
 
+    @Override
+    public String toString() {
+        String n = System.lineSeparator();
+        StringBuilder sb = new StringBuilder("{").append(n);
+        sb.append("Atendente: ").append(atendente).append(n);
+        sb.append("Cliente: ").append(cliente).append(n);
+        sb.append("Carga Horária: ").append(cargaHorariaAtendimentos).append(n);
+        sb.append("Quantidade: ").append(qtdAtendimentos).append(n);
+        sb.append("}");
+        return sb.toString();
+    }
+
 }

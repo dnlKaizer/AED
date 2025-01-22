@@ -47,11 +47,12 @@ public class Fila<T> {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder("[ ");
+        String n = System.lineSeparator();
+        StringBuilder sb = new StringBuilder("{").append(n);
         for (Cell cell = head.prox; cell != null; cell = cell.prox) {
-            sb.append(cell.item).append(" ");
+            sb.append(cell.item).append(n);
         }
-        sb.append("]");
+        sb.append("}");
         return sb.toString();
     }
 

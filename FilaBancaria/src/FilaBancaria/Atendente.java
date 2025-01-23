@@ -21,8 +21,12 @@ public class Atendente {
         return qtdAtendimentos;
     }
 
-    public int cargaHorariaAtendimentos() {
+    public int getCargaHorariaAtendimentos() {
         return cargaHorariaAtendimentos;
+    }
+
+    public float getTempoMedioAtendimento() {
+        return (float)cargaHorariaAtendimentos / qtdAtendimentos;
     }
 
     public void incrementarTempoAtendimento() {

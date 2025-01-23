@@ -28,6 +28,10 @@ public class Caixa {
         return at;
     }
 
+    public float getTempoMedioAtendimento() {
+        return (float)cargaHorariaAtendimentos / qtdAtendimentos;
+    }
+
     public boolean temCliente() {
         return cliente != null;
     }

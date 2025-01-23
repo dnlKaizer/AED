@@ -1,3 +1,6 @@
+import java.util.Arrays;
+import java.util.Random;
+
 public class App {
 
     /*
@@ -25,14 +28,74 @@ public class App {
      * – Esta atividade equivale a 2 h/a da disciplina AED1.
      */
 
+    public static Random random = new Random();
+    
     public static void main(String[] args) throws Exception {
         Ordenar ordenar = new Ordenar();
-        int tam = 100;
+        long tf, ti, soma;
+        int porcentagem = 5;
+        int tam = 5000;
+        int nVezes = 100;
+        int qtd = tam * porcentagem / 100;
         Dado[] dados = new Dado[tam];
         for (int i = 0; i < tam; i++) {
-            dados[i] = new Dado(tam - i);
+            dados[i] = new Dado(i + 1);
         }
-        imprimirDados(dados);
+        Dado[] copiaDados = Arrays.copyOf(dados, tam);
+
+        System.out.println();
+        System.out.println();
+        System.out.println("Perc\tBol\tSel\tIns\tShel");
+
+        for (int index = 0; index <= tam - qtd; index += qtd) {
+            desordena(dados, qtd, index);
+            System.out.print(((porcentagem * index / qtd) + 5));
+            System.out.print("%\t");
+            soma = 0;
+            // Bolha
+            for (int i = 0; i < nVezes; i++) {
+                copiaDados = Arrays.copyOf(dados, tam);
+                ti = System.currentTimeMillis();
+                ordenar.bolha(copiaDados);
+                tf = System.currentTimeMillis();
+                soma += (tf - ti);
+            }
+            System.out.print((float)soma / nVezes);
+            System.out.print("\t");
+            soma = 0;
+            // Seleção
+            for (int i = 0; i < nVezes; i++) {
+                copiaDados = Arrays.copyOf(dados, tam);
+                ti = System.currentTimeMillis();
+                ordenar.selecao(copiaDados);
+                tf = System.currentTimeMillis();
+                soma += (tf - ti);
+            }
+            System.out.print((float)soma / nVezes);
+            System.out.print("\t");
+            soma = 0;
+            // Inserção Direta
+            for (int i = 0; i < nVezes; i++) {
+                copiaDados = Arrays.copyOf(dados, tam);
+                ti = System.currentTimeMillis();
+                ordenar.insercaoDireta(copiaDados);
+                tf = System.currentTimeMillis();
+                soma += (tf - ti);
+            }
+            System.out.print((float)soma / nVezes);
+            System.out.print("\t");
+            soma = 0;
+            // Shell Sort
+            for (int i = 0; i < nVezes; i++) {
+                copiaDados = Arrays.copyOf(dados, tam);
+                ti = System.currentTimeMillis();
+                ordenar.shellSort(copiaDados);
+                tf = System.currentTimeMillis();
+                soma += (tf - ti);
+            }
+            System.out.print((float)soma / nVezes);
+            System.out.println();
+        }
     }
 
     public static void imprimirDados(Dado[] vet) {
@@ -48,4 +111,12 @@ public class App {
         System.out.print(" ]");
         System.out.println();
     }
+
+    public static void desordena(Dado[] vet, int qtd, int index) {
+        int tam = vet.length;
+        for (int i = index; i < index + qtd; i++) {
+            vet[i].setChave(random.nextInt(tam) + 1);
+        }
+    }
+
 }

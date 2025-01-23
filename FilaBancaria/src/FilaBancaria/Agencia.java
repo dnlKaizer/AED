@@ -1,6 +1,7 @@
 package FilaBancaria;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 
 import FilaBancaria.fila.FilaAtendente;
@@ -45,6 +46,22 @@ public class Agencia {
         for (Caixa caixa : caixas) {
             caixa.addAtendente(filaDescanso.dequeue());
         }
+    }
+
+    public FilaCliente getFilaComum() {
+        return (FilaCliente) filaComum.clone();
+    }
+
+    public FilaCliente getFilaPreferencial() {
+        return (FilaCliente) filaPreferencial.clone();
+    }
+
+    public FilaAtendente getFilaDescanso() {
+        return (FilaAtendente) filaDescanso.clone();
+    }
+
+    public ArrayList<Caixa> getCaixas() {
+        return new ArrayList<>(caixas);
     }
 
     public void execute() {

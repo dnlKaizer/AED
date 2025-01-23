@@ -12,4 +12,9 @@ public class FilaAtendente extends Fila<Atendente> {
     public boolean proximoAtendenteDescansou() {
         return (head.prox != null && head.prox.item.estaDescansado());
     }
+
+    @Override
+    public Object clone() {
+        return super.clone();
+    }
 }

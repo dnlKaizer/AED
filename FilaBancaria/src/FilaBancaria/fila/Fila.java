@@ -1,7 +1,7 @@
 package FilaBancaria.fila;
 import java.util.NoSuchElementException;
 
-public class Fila<T> {
+public class Fila<T> implements Cloneable {
     
     protected class Cell {
         Cell prox;
@@ -57,4 +57,12 @@ public class Fila<T> {
         return sb.toString();
     }
 
+    @Override
+    public Object clone() {
+        Fila<T> novaFila = new Fila<>();
+        for (Cell cell = this.head.prox; cell != null; cell = cell.prox) {
+            novaFila.enqueue(cell.item);
+        }
+        return novaFila;
+    }
 }

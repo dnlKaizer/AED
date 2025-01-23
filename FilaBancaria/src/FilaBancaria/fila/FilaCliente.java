@@ -9,4 +9,9 @@ public class FilaCliente extends Fila<Cliente> {
             cliente.incrementarTempoEsperaFila();
         }
     }
+
+    @Override
+    public Object clone() {
+        return super.clone();
+    }
 }

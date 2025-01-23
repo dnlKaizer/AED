@@ -16,5 +16,10 @@ public class Dado implements Item {
         else if (this.chave > item.getChave()) return 1;
         else return 0;
     }
+
+    @Override
+    public String toString() {
+        return (new StringBuilder()).append(this.chave).toString();
+    }
     
 }

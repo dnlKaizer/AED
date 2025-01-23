@@ -1,7 +1,6 @@
 package FilaBancaria;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Random;
 
 import FilaBancaria.fila.FilaAtendente;
@@ -18,8 +17,12 @@ public class Agencia {
     private final FilaAtendente filaDescanso;
     private final ArrayList<Caixa> caixas;
 
+    private int tempo;
     private int preferenciasSeguidas;   
     private double coeficienteClientes; 
+    private int numClientesExcedeuTempoFila;
+    private int numClientesTotal;
+    private int cargaHorariaTotal;
 
     private final Random random = new Random();
 
@@ -28,8 +31,10 @@ public class Agencia {
         this.filaPreferencial = new FilaCliente();
         this.filaDescanso = new FilaAtendente();
         this.caixas = new ArrayList<>();
+        this.tempo = 0;
         this.preferenciasSeguidas = 0;
         this.coeficienteClientes = 0;
+        this.numClientesExcedeuTempoFila = 0;
         this.init();
     }
 
@@ -64,11 +69,28 @@ public class Agencia {
         return new ArrayList<>(caixas);
     }
 
+    public int getNumClientesExcedeuTempoFila() {
+        return numClientesExcedeuTempoFila;
+    }
+
+    public int getCargaHorariaTotal() {
+        return cargaHorariaTotal;
+    }
+
+    public int getNumClientesTotal() {
+        return numClientesTotal;
+    }
+
+    public float getTempoMedioAtendimento() {
+        return (float)cargaHorariaTotal / numClientesTotal;
+    }
+
     public void execute() {
         // Executa durante o tempo determinado
-        for (int tempo = 0; tempo < TEMPO_SIMULACAO; tempo++) {
+        while (tempo < TEMPO_SIMULACAO) {
             sortearClientes();
             atualizarTudo();
+            tempo++;
         }
         // Executa enquanto tiver algum cliente na fila
         while (!filaComum.isEmpty() || !filaPreferencial.isEmpty()) {
@@ -86,6 +108,8 @@ public class Agencia {
                 Atendente atendente = caixa.getAtendente();
                 atendente.irDescansar();
                 filaDescanso.enqueue(atendente);
+                numClientesTotal += caixa.getQtdAtendimentos();
+                cargaHorariaTotal += caixa.getCargaHorariaAtendimentos();
             }
         }
     }
@@ -122,7 +146,11 @@ public class Agencia {
             }
             if (!caixa.temCliente()) {
                 FilaCliente fila = verificarPreferencia();
-                if (fila != null) caixa.addCliente(fila.dequeue());
+                if (fila != null) {
+                    Cliente cliente = fila.dequeue();
+                    if (cliente.excedeuTempoFila()) numClientesExcedeuTempoFila++;
+                    caixa.addCliente(cliente);
+                }
             }
             caixa.atender();
         }
@@ -147,6 +175,9 @@ public class Agencia {
         while (!filaDescanso.isEmpty()) {
             System.out.println(filaDescanso.dequeue());
         }
+        System.out.println("Carga Horária Total: " + cargaHorariaTotal);
+        System.out.println("Quantidade de Clientes: " + numClientesTotal);
+        System.out.println("Tempo Médio de Atendimentos: " + getTempoMedioAtendimento());
     }
 
 }

@@ -25,6 +25,7 @@ public class App {
                 System.out.println("---------------------------------------------------------------" + 
                 "-------------------------------------------");
                 System.out.println();
+                System.out.println();
                 ansi.moverCursorCima(1);
                 while (!agencia.tempoAcabou()) {
                     synchronized (trava) {
@@ -54,8 +55,13 @@ public class App {
                 while (agencia.isCaixasVazios()) {
                     agencia.atualizarCaixas();
                 }
+                System.out.println("---------------------------------------------------------------" + 
+                "-------------------------------------------");
+                System.out.println();
+                System.out.println();
                 // Coloca todos os atendentes na fila de descanso
                 agencia.colocarAtendentesDescanso();
+                System.out.println(view.gerarRelatorio());
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
                 System.out.println("Thread interrompida.");

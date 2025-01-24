@@ -23,7 +23,8 @@ public class App {
         Thread mainThread = new Thread(() -> {
             try {
                 Thread.sleep(1000); // Simula trabalho
-                System.out.println("---------------------------------------------------------------------------------------");
+                System.out.println("---------------------------------------------------------------" + 
+                "-------------------------------------------");
                 System.out.println();
                 ansi.moveCursorUp(1);
                 while (!agencia.tempoAcabou()) {
@@ -119,21 +120,30 @@ public class App {
                 System.exit(0);
                 break;
             case 1:
-                // multiplicador = 1000;
+                multiplicador = 1000;
                 ansi.moveCursorUp(5);
                 for (int i = 0; i < 5; i++) {
                     ansi.cleanLine();
                     ansi.moveCursorDown(1);
                 }
-                ansi.moveCursorDown(5-numCaixas);
+                ansi.moveCursorDown(numCaixas + 1);
                 resumeExecution();
                 break;
 
             case 2:
-                System.out.println();
+                ansi.moveCursorUp(5);
+                for (int i = 0; i < 5; i++) {
+                    ansi.cleanLine();
+                    ansi.moveCursorDown(1);
+                }
+                ansi.moveCursorUp(5);
                 System.out.print("Digite o multiplicador: ");
                 multiplicador = sc.nextInt();
+                if (multiplicador < 1) multiplicador = 1;
+                if (multiplicador > 200) multiplicador = 200;
                 ansi.moveCursorUp(1);
+                ansi.cleanLine();
+                ansi.moveCursorDown(numCaixas + 6);
                 resumeExecution();
                 break;
         

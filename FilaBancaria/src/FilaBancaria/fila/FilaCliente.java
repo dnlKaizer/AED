@@ -21,10 +21,17 @@ public class FilaCliente extends Fila<Cliente> {
 
     @Override
     public String toString() {
+        int i = 0;
         StringBuilder sb = new StringBuilder("[ ");
-        for (Cell cell = head.prox; cell != null; cell = cell.prox) {
+        for (Cell cell = head.prox; cell != null; cell = cell.prox, i++) {
             sb.append(cell.item.getNome());
-            if (cell.prox != null) sb.append(" , ");
+            if (cell.prox != null) {
+                sb.append(" , ");
+                if (i > 4) {
+                    sb.append("...");
+                    break;
+                }
+            }
         }
         sb.append(" ]");
         return sb.toString();

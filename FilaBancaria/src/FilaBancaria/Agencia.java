@@ -57,19 +57,19 @@ public class Agencia {
     }
 
     public FilaCliente getFilaComum() {
-        return (FilaCliente) filaComum.clone();
+        return filaComum;
     }
 
     public FilaCliente getFilaPreferencial() {
-        return (FilaCliente) filaPreferencial.clone();
+        return filaPreferencial;
     }
 
     public FilaAtendente getFilaDescanso() {
-        return (FilaAtendente) filaDescanso.clone();
+        return filaDescanso;
     }
 
     public ArrayList<Caixa> getCaixas() {
-        return new ArrayList<>(caixas);
+        return caixas;
     }
 
     public int getTempo() {
@@ -201,17 +201,4 @@ public class Agencia {
         }
         return null;
     }
-
-    public void relatorio() {
-        for (Caixa caixa : caixas) {
-            System.out.println(caixa);
-        }
-        while (!filaDescanso.isEmpty()) {
-            System.out.println(filaDescanso.desenfileirar());
-        }
-        System.out.println("Carga Horária Total: " + cargaHorariaTotal);
-        System.out.println("Quantidade de Clientes: " + numClientesTotal);
-        System.out.println("Tempo Médio de Atendimentos: " + getTempoMedioAtendimento());
-    }
-
 }

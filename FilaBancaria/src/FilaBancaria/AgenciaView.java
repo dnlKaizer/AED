@@ -76,6 +76,9 @@ public class AgenciaView {
         sb.append("--------------------------------------------");
         sb.append("--------------------------------------").append(n);
 
+        sb.append("Número de clientes que ficaram mais de 30min na fila: ");
+        sb.append(agencia.getNumClientesExcedeuTempoFila()).append(n);
+
         return sb.toString();
     }
 }

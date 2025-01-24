@@ -19,7 +19,7 @@ public class AgenciaView {
         ArrayList<Caixa> caixas = agencia.getCaixas();
 
         String n = System.lineSeparator();
-        StringBuilder sb = new StringBuilder(n);
+        StringBuilder sb = new StringBuilder();
         sb.append("Tempo: ").append(agencia.getTempo()).append(n);
         sb.append(n);
         sb.append("Fila comum: ").append(filaComum).append(n);

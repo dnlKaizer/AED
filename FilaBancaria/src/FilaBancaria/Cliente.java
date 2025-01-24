@@ -8,6 +8,7 @@ public class Cliente {
     private final int TEMPO_MIN_ATENDIMENTO = 1; 
     private final double CHANCE_PREFERENCIAL = 0.2;
 
+    private final String nome;
     private final boolean isPreferencial;
     private final int tempoNecessarioAtendimento;
 
@@ -16,11 +17,16 @@ public class Cliente {
 
     private final Random random = new Random();
 
-    public Cliente() {
+    public Cliente(String nome) {
+        this.nome = nome;
         this.isPreferencial = random.nextDouble() < CHANCE_PREFERENCIAL;
         this.tempoNecessarioAtendimento = random.nextInt(TEMPO_MIN_ATENDIMENTO, TEMPO_MAX_ATENDIMENTO + 1);
         this.tempoAtendimento = 0;
         this.tempoEsperaFila = 0;
+    }
+
+    public String getNome() {
+        return nome;
     }
 
     public boolean isPreferencial() {

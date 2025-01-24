@@ -24,6 +24,8 @@ public class Agencia {
     private int numClientesTotal;
     private int cargaHorariaTotal;
 
+    private int nomeCliente;
+
     private final Random random = new Random();
 
     public Agencia() {
@@ -35,6 +37,7 @@ public class Agencia {
         this.preferenciasSeguidas = 0;
         this.coeficienteClientes = 0;
         this.numClientesExcedeuTempoFila = 0;
+        this.nomeCliente = 0;
         this.init();
     }
 
@@ -46,7 +49,7 @@ public class Agencia {
         }
         int numAtendentes = 2 * numCaixas;
         for (int i = 0; i < numAtendentes; i++) {
-            filaDescanso.enqueue(new Atendente());
+            filaDescanso.enqueue(new Atendente("Atendente" + (i+1)));
         }
         for (Caixa caixa : caixas) {
             caixa.addAtendente(filaDescanso.dequeue());
@@ -140,7 +143,8 @@ public class Agencia {
         // int numClientes = random.nextDouble() < coeficienteClientes ? random.nextInt(1, NUMERO_MAX_CLIENTES + 1) : 0;
         int numClientes = 1;
         for (int i = 0; i < numClientes; i++) {
-            Cliente cliente = new Cliente();
+            nomeCliente++;
+            Cliente cliente = new Cliente("Cliente" + nomeCliente);
             if (cliente.isPreferencial()) filaPreferencial.enqueue(cliente);
             else filaComum.enqueue(cliente); 
         }

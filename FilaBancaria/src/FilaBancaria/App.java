@@ -4,10 +4,9 @@ import org.fusesource.jansi.AnsiConsole;
 
 public class App {
 
-    private static final Object lock = new Object();
-    private static boolean paused = false;
+    private static final Object trava = new Object();
+    private static boolean pausa = false;
     private static AnsiUtils ansi = new AnsiUtils();
-    private static boolean working = true;
     private static int multiplicador = 1;
     private static int numCaixas;
 
@@ -26,20 +25,20 @@ public class App {
                 System.out.println("---------------------------------------------------------------" + 
                 "-------------------------------------------");
                 System.out.println();
-                ansi.moveCursorUp(1);
+                ansi.moverCursorCima(1);
                 while (!agencia.tempoAcabou()) {
-                    synchronized (lock) {
-                        while (paused) {
-                            lock.wait(); // Aguarda até ser notificado
+                    synchronized (trava) {
+                        while (pausa) {
+                            trava.wait(); // Aguarda até ser notificado
                         }
                     }
                     if (agencia.getTempo() > 0) {
-                        ansi.moveCursorUp(6 + numCaixas);
+                        ansi.moverCursorCima(6 + numCaixas);
                         for (int i = 0; i < 5 + numCaixas; i++) {
-                            ansi.cleanLine();
-                            ansi.moveCursorDown(1);
+                            ansi.limparLinha();
+                            ansi.moverCursorBaixo(1);
                         }
-                        ansi.moveCursorUp(5 + numCaixas);
+                        ansi.moverCursorCima(5 + numCaixas);
                     }
                     agencia.sortearClientes();
                     agencia.atualizarTudo();
@@ -88,26 +87,28 @@ public class App {
     }
 
     public static void pauseExecution() {
-        synchronized (lock) {
-            paused = true;
+        synchronized (trava) {
+            pausa = true;
             moduloAdm();
         }
     }
 
     public static void resumeExecution() {
-        synchronized (lock) {
-            paused = false;
-            lock.notifyAll(); // Notifica todas as threads que estavam esperando
+        synchronized (trava) {
+            pausa = false;
+            trava.notifyAll(); // Notifica todas as threads que estavam esperando
         }
     }
 
     public static void moduloAdm() {
-        ansi.moveCursorUp(7 + numCaixas);
+        ansi.moverCursorCima(7 + numCaixas);
         for (int i = 0; i < 5 + numCaixas; i++) {
-            ansi.cleanLine();
-            ansi.moveCursorDown(1);
+            ansi.limparLinha();
+            ansi.moverCursorBaixo(1);
         }
-        ansi.moveCursorUp(5 + numCaixas);
+        ansi.moverCursorCima(5 + numCaixas);
+
+        @SuppressWarnings("resource")
         Scanner sc = new Scanner(System.in);
         System.out.println("0. Fechar programa");
         System.out.println("1. Finalizar execução (Pular para final)");
@@ -121,33 +122,34 @@ public class App {
                 break;
             case 1:
                 multiplicador = 1000;
-                ansi.moveCursorUp(5);
+                ansi.moverCursorCima(5);
                 for (int i = 0; i < 5; i++) {
-                    ansi.cleanLine();
-                    ansi.moveCursorDown(1);
+                    ansi.limparLinha();
+                    ansi.moverCursorBaixo(1);
                 }
-                ansi.moveCursorDown(numCaixas + 1);
+                ansi.moverCursorBaixo(numCaixas + 1);
                 resumeExecution();
                 break;
 
             case 2:
-                ansi.moveCursorUp(5);
+                ansi.moverCursorCima(5);
                 for (int i = 0; i < 5; i++) {
-                    ansi.cleanLine();
-                    ansi.moveCursorDown(1);
+                    ansi.limparLinha();
+                    ansi.moverCursorBaixo(1);
                 }
-                ansi.moveCursorUp(5);
+                ansi.moverCursorCima(5);
                 System.out.print("Digite o multiplicador: ");
                 multiplicador = sc.nextInt();
                 if (multiplicador < 1) multiplicador = 1;
                 if (multiplicador > 200) multiplicador = 200;
-                ansi.moveCursorUp(1);
-                ansi.cleanLine();
-                ansi.moveCursorDown(numCaixas + 6);
+                ansi.moverCursorCima(1);
+                ansi.limparLinha();
+                ansi.moverCursorBaixo(numCaixas + 6);
                 resumeExecution();
                 break;
         
             default:
+                System.exit(0);
                 break;
         }
     }

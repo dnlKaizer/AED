@@ -49,10 +49,10 @@ public class Agencia {
         }
         int numAtendentes = 2 * numCaixas;
         for (int i = 0; i < numAtendentes; i++) {
-            filaDescanso.enqueue(new Atendente("Atendente" + (i+1)));
+            filaDescanso.enfileirar(new Atendente("Atendente" + (i+1)));
         }
         for (Caixa caixa : caixas) {
-            caixa.addAtendente(filaDescanso.dequeue());
+            caixa.addAtendente(filaDescanso.desenfileirar());
         }
     }
 
@@ -140,7 +140,7 @@ public class Agencia {
             if (caixa.temAtendente()) {
                 Atendente atendente = caixa.getAtendente();
                 atendente.irDescansar();
-                filaDescanso.enqueue(atendente);
+                filaDescanso.enfileirar(atendente);
                 numClientesTotal += caixa.getQtdAtendimentos();
                 cargaHorariaTotal += caixa.getCargaHorariaAtendimentos();
             }
@@ -152,8 +152,8 @@ public class Agencia {
         for (int i = 0; i < numClientes; i++) {
             nomeCliente++;
             Cliente cliente = new Cliente("Cliente" + nomeCliente);
-            if (cliente.isPreferencial()) filaPreferencial.enqueue(cliente);
-            else filaComum.enqueue(cliente); 
+            if (cliente.isPreferencial()) filaPreferencial.enfileirar(cliente);
+            else filaComum.enfileirar(cliente); 
         }
     }
 
@@ -169,11 +169,11 @@ public class Agencia {
             if (caixa.acabouTurnoAtendente()) {
                 Atendente atendente = caixa.getAtendente();
                 atendente.irDescansar();
-                filaDescanso.enqueue(atendente);
+                filaDescanso.enfileirar(atendente);
             }
             if (!caixa.temAtendente()) {
                 if (filaDescanso.proximoAtendenteDescansou()) {
-                    Atendente atendente = filaDescanso.dequeue();
+                    Atendente atendente = filaDescanso.desenfileirar();
                     atendente.irTrabalhar();
                     caixa.addAtendente(atendente);
                 } else continue;
@@ -181,7 +181,7 @@ public class Agencia {
             if (!caixa.temCliente()) {
                 FilaCliente fila = verificarPreferencia();
                 if (fila != null) {
-                    Cliente cliente = fila.dequeue();
+                    Cliente cliente = fila.desenfileirar();
                     if (cliente.excedeuTempoFila()) numClientesExcedeuTempoFila++;
                     caixa.addCliente(cliente);
                 }
@@ -207,7 +207,7 @@ public class Agencia {
             System.out.println(caixa);
         }
         while (!filaDescanso.isEmpty()) {
-            System.out.println(filaDescanso.dequeue());
+            System.out.println(filaDescanso.desenfileirar());
         }
         System.out.println("Carga Horária Total: " + cargaHorariaTotal);
         System.out.println("Quantidade de Clientes: " + numClientesTotal);

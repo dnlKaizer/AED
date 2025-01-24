@@ -30,14 +30,14 @@ public class Fila<T> implements Cloneable {
         return head == tail;
     }
 
-    public void enqueue(T item) {
+    public void enfileirar(T item) {
         if (item == null) throw new IllegalArgumentException("Item nulo");
         tail.prox = new Cell(item);
         tail = tail.prox;
         size++;
     }
 
-    public T dequeue() {
+    public T desenfileirar() {
         if (size == 0) throw new NoSuchElementException("Lista vazia");
         T item = head.prox.item;
         head = head.prox;
@@ -61,7 +61,7 @@ public class Fila<T> implements Cloneable {
     public Object clone() {
         Fila<T> novaFila = new Fila<>();
         for (Cell cell = this.head.prox; cell != null; cell = cell.prox) {
-            novaFila.enqueue(cell.item);
+            novaFila.enfileirar(cell.item);
         }
         return novaFila;
     }

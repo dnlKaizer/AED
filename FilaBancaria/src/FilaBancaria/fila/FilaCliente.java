@@ -14,7 +14,7 @@ public class FilaCliente extends Fila<Cliente> {
     public Object clone() {
         FilaCliente novaFila = new FilaCliente();
         for (Cell cell = this.head.prox; cell != null; cell = cell.prox) {
-            novaFila.enqueue(cell.item);
+            novaFila.enfileirar(cell.item);
         }
         return novaFila;
     }

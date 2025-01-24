@@ -4,25 +4,35 @@ public class Atendente {
     private final int TEMPO_MAX_TRABALHO = 180;
     private final int TEMPO_DESCANSO = 30;
 
+    private final String nome;
     private int qtdAtendimentos;
     private int cargaHorariaAtendimentos;
 
     private int tempoAtendimento;
     private int tempoDescanso;
 
-    public Atendente() {
+    public Atendente(String nome) {
+        this.nome = nome;
         this.qtdAtendimentos = 0;
         this.cargaHorariaAtendimentos = 0;
         this.tempoAtendimento = 0;
         this.tempoDescanso = 0;
     }
 
+    public String getNome() {
+        return nome;
+    }
+
     public int getQtdAtendimentos() {
         return qtdAtendimentos;
     }
 
-    public int cargaHorariaAtendimentos() {
+    public int getCargaHorariaAtendimentos() {
         return cargaHorariaAtendimentos;
+    }
+
+    public float getTempoMedioAtendimento() {
+        return (float)cargaHorariaAtendimentos / qtdAtendimentos;
     }
 
     public void incrementarTempoAtendimento() {

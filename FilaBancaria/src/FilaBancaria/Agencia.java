@@ -76,6 +76,10 @@ public class Agencia {
         return tempo;
     }
 
+    public int getNumCaixas() {
+        return caixas.size();
+    }
+
     public int getNumClientesExcedeuTempoFila() {
         return numClientesExcedeuTempoFila;
     }

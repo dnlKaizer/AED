@@ -12,23 +12,23 @@ public class AgenciaView {
         this.agencia = agencia;
     }
 
-    public void imprimirFilas() {
+    public String imprimirFilas() {
         FilaCliente filaComum = agencia.getFilaComum();
         FilaCliente filaPreferencial = agencia.getFilaPreferencial();
         FilaAtendente filaDescanso = agencia.getFilaDescanso();
         ArrayList<Caixa> caixas = agencia.getCaixas();
 
-        System.out.println();
-        System.out.println("-----------------------------------------------------------------------------------------");
-        System.out.println("Tempo: " + agencia.getTempo());
-        System.out.println();
-        System.out.println("Fila comum: " + filaComum);
-        System.out.println("Fila preferencial: " + filaPreferencial);
-        System.out.println("Fila descanso: " + filaDescanso);
+        String n = System.lineSeparator();
+        StringBuilder sb = new StringBuilder(n);
+        sb.append("Tempo: ").append(agencia.getTempo()).append(n);
+        sb.append(n);
+        sb.append("Fila comum: ").append(filaComum).append(n);
+        sb.append("Fila preferencial: ").append(filaPreferencial).append(n);
+        sb.append("Fila descanso: ").append(filaDescanso).append(n);
         for (int i = 0; i < caixas.size(); i++) {
             Caixa caixa = caixas.get(i);
-            System.out.println(caixa.getNome() + ": " + caixa);
+            sb.append(caixa.getNome()).append(": ").append(caixa).append(n);
         }
-        System.out.println("-----------------------------------------------------------------------------------------");
+        return sb.toString();
     }
 }

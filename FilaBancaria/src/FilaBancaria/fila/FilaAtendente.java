@@ -15,6 +15,10 @@ public class FilaAtendente extends Fila<Atendente> {
 
     @Override
     public Object clone() {
-        return super.clone();
+        FilaAtendente novaFila = new FilaAtendente();
+        for (Cell cell = this.head.prox; cell != null; cell = cell.prox) {
+            novaFila.enqueue(cell.item);
+        }
+        return novaFila;
     }
 }

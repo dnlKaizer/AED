@@ -87,21 +87,43 @@ public class Agencia {
 
     public void execute() {
         // Executa durante o tempo determinado
-        while (tempo < TEMPO_SIMULACAO) {
+        while (tempoAcabou()) {
             sortearClientes();
             atualizarTudo();
-            tempo++;
+            incrementarTempo();
         }
         // Executa enquanto tiver algum cliente na fila
-        while (!filaComum.isEmpty() || !filaPreferencial.isEmpty()) {
+        while (!isFilasVazias()) {
             atualizarTudo();
         }
         // Executa enquanto tiver algum cliente em qualquer caixa
-        for (Caixa caixa : caixas) {
-            while (caixa.temCliente()) {
-                atualizarCaixas();
-            }
+        while (isCaixasVazios()) {
+            atualizarCaixas();
         }
+        // Coloca todos os atendentes na fila de descanso
+        colocarAtendentesDescanso();
+    }
+
+    public boolean tempoAcabou() {
+        return tempo >= TEMPO_SIMULACAO;
+    }
+
+    public void incrementarTempo() {
+        tempo++;
+    }
+
+    public boolean isFilasVazias() {
+        return filaComum.isEmpty() && filaPreferencial.isEmpty();
+    }
+
+    public boolean isCaixasVazios() {
+        for (Caixa caixa : caixas) {
+            if (caixa.temCliente()) return false;
+        }
+        return true;
+    }
+
+    public void colocarAtendentesDescanso() {
         // Coloca todos os atendentes na fila de descanso
         for (Caixa caixa : caixas) {
             if (caixa.temAtendente()) {
@@ -115,7 +137,8 @@ public class Agencia {
     }
 
     public void sortearClientes() {
-        int numClientes = random.nextDouble() < coeficienteClientes ? random.nextInt(1, NUMERO_MAX_CLIENTES + 1) : 0;
+        // int numClientes = random.nextDouble() < coeficienteClientes ? random.nextInt(1, NUMERO_MAX_CLIENTES + 1) : 0;
+        int numClientes = 1;
         for (int i = 0; i < numClientes; i++) {
             Cliente cliente = new Cliente();
             if (cliente.isPreferencial()) filaPreferencial.enqueue(cliente);

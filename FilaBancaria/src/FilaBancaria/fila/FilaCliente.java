@@ -12,6 +12,10 @@ public class FilaCliente extends Fila<Cliente> {
 
     @Override
     public Object clone() {
-        return super.clone();
+        FilaCliente novaFila = new FilaCliente();
+        for (Cell cell = this.head.prox; cell != null; cell = cell.prox) {
+            novaFila.enqueue(cell.item);
+        }
+        return novaFila;
     }
 }

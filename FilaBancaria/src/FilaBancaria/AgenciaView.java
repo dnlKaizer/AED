@@ -18,7 +18,10 @@ public class AgenciaView {
         FilaAtendente filaDescanso = agencia.getFilaDescanso();
         ArrayList<Caixa> caixas = agencia.getCaixas();
 
+        System.out.println();
         System.out.println("-----------------------------------------------------------------------------------------");
+        System.out.println("Tempo: " + agencia.getTempo());
+        System.out.println();
         System.out.println("Fila comum: " + filaComum);
         System.out.println("Fila preferencial: " + filaPreferencial);
         System.out.println("Fila descanso: " + filaDescanso);

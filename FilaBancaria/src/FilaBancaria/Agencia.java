@@ -8,8 +8,8 @@ import FilaBancaria.fila.FilaCliente;
 
 public class Agencia {
     private final int TEMPO_SIMULACAO = 360;
-    private final int QUANTIDADE_MIN_CAIXAS = 1;
-    private final int QUANTIDADE_MAX_CAIXAS = 5;
+    private final int QUANTIDADE_MIN_CAIXAS = 2;
+    private final int QUANTIDADE_MAX_CAIXAS = 4;
     private final int NUMERO_MAX_CLIENTES = 3;
 
     private final FilaCliente filaComum;
@@ -43,7 +43,7 @@ public class Agencia {
 
     public void init() {
         int numCaixas = random.nextInt(QUANTIDADE_MIN_CAIXAS, QUANTIDADE_MAX_CAIXAS + 1);
-        this.coeficienteClientes = ((double)numCaixas / 6) / NUMERO_MAX_CLIENTES;
+        this.coeficienteClientes = ((double)numCaixas / 4) / NUMERO_MAX_CLIENTES;
         for (int i = 0; i < numCaixas; i++) {
             caixas.add(new Caixa("Caixa" + (i+1)));
         }
@@ -70,6 +70,10 @@ public class Agencia {
 
     public ArrayList<Caixa> getCaixas() {
         return new ArrayList<>(caixas);
+    }
+
+    public int getTempo() {
+        return tempo;
     }
 
     public int getNumClientesExcedeuTempoFila() {
@@ -140,8 +144,7 @@ public class Agencia {
     }
 
     public void sortearClientes() {
-        // int numClientes = random.nextDouble() < coeficienteClientes ? random.nextInt(1, NUMERO_MAX_CLIENTES + 1) : 0;
-        int numClientes = 1;
+        int numClientes = random.nextDouble() < coeficienteClientes ? random.nextInt(1, NUMERO_MAX_CLIENTES + 1) : 0;
         for (int i = 0; i < numClientes; i++) {
             nomeCliente++;
             Cliente cliente = new Cliente("Cliente" + nomeCliente);

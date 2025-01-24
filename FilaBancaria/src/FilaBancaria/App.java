@@ -8,9 +8,12 @@ public class App {
     public static void main(String[] args) {
         Agencia agencia = new Agencia();
         AgenciaView view = new AgenciaView(agencia);
+        System.out.println();
+        System.out.println();
         // Thread principal que executa a lógica do programa
         Thread mainThread = new Thread(() -> {
             try {
+                Thread.sleep(4000); // Simula trabalho
                 while (!agencia.tempoAcabou()) {
                     synchronized (lock) {
                         while (paused) {
@@ -33,9 +36,10 @@ public class App {
 
         // Thread que lê comandos do terminal
         Thread inputThread = new Thread(() -> {
+            @SuppressWarnings("resource")
             Scanner scanner = new Scanner(System.in);
+            System.out.println("Digite '.' para pausar quando achar necessário. Uma nova interface irá te guiar. Programa iniciando...");
             while (true) {
-                System.out.println("Digite '.' para pausar:");
                 String command = scanner.nextLine().trim().toLowerCase();
 
                 if (command.equals(".")) {

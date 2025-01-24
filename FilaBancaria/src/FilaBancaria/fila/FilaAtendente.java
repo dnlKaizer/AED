@@ -21,4 +21,16 @@ public class FilaAtendente extends Fila<Atendente> {
         }
         return novaFila;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder("[ ");
+        for (Cell cell = head.prox; cell != null; cell = cell.prox) {
+            sb.append(cell.item.getNome());
+            if (cell.prox != null) sb.append(" , ");
+        }
+        sb.append(" ]");
+        return sb.toString();
+    }
+    
 }

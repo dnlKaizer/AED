@@ -1,17 +1,23 @@
 package FilaBancaria;
 
 public class Caixa {
-    Atendente atendente;
-    Cliente cliente;
+    private Atendente atendente;
+    private Cliente cliente;
 
+    private final String nome;
     private int qtdAtendimentos;
     private int cargaHorariaAtendimentos;
 
-    public Caixa() {
+    public Caixa(String nome) {
+        this.nome = nome;
         this.atendente = null;
         this.cliente = null;
         this.qtdAtendimentos = 0;
         this.cargaHorariaAtendimentos = 0;
+    }
+
+    public String getNome() {
+        return nome;
     }
 
     public int getQtdAtendimentos() {
@@ -73,6 +79,8 @@ public class Caixa {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("[ ");
+        sb.append(atendente == null ? "-":atendente.getNome()).append(" , ");
+        sb.append(cliente == null ? "-":cliente.getNome()).append(" , ");
         sb.append("Quantidade: ").append(qtdAtendimentos).append(" , ");
         sb.append("Carga Horária: ").append(cargaHorariaAtendimentos);
         sb.append(" ]");

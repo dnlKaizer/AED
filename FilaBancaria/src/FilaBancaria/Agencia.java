@@ -45,7 +45,7 @@ public class Agencia {
         int numCaixas = random.nextInt(QUANTIDADE_MIN_CAIXAS, QUANTIDADE_MAX_CAIXAS + 1);
         this.coeficienteClientes = ((double)numCaixas / 6) / NUMERO_MAX_CLIENTES;
         for (int i = 0; i < numCaixas; i++) {
-            caixas.add(new Caixa());
+            caixas.add(new Caixa("Caixa" + (i+1)));
         }
         int numAtendentes = 2 * numCaixas;
         for (int i = 0; i < numAtendentes; i++) {
